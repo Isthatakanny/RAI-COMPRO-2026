@@ -5,11 +5,11 @@ int main() {
     int age;
     float height;
     int weight;
-    char gender[10];
+    char gender[2];
     char eq[50];
 
     printf("Enter your Name: ");
-    scanf("%49s",name);
+    scanf("%s",name);
 
     printf("Enter your Age: ");
     scanf("%d",&age);
@@ -22,8 +22,6 @@ int main() {
 
     printf("Enter your gender: ");
     scanf("%s",gender);
-
-    getchar();
 
     printf("Enter your Education Qualification: ");
     scanf(" %[^\n]", eq);
