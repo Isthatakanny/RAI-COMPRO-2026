@@ -1,35 +1,73 @@
 #include <stdio.h>
 
-int main() {
-    int array[5] = {};
-    printf("Enter 5 integers: ");
-    scanf("%d %d %d %d %d", &array[0], &array[1], &array[2], &array[3], &array[4]);
-    int *ptr1 = &array[0];
-    int *ptr2 = &array[1];
-    int temp = *ptr1;
-    printf("Unsorted: %d %d %d %d %d\n", array[0], array[1], array[2], array[3], array[4]);
-    for (int i = 0; i < 5; i++) {
-        if (*(ptr1 + i) > *(ptr2 + i)) {
-            temp = *(ptr1 + i);
-            *(ptr1 + i) = *(ptr2 + i);
-            *(ptr2 + i) = temp;
+#define MAX 100
+
+char names[MAX][50];
+int grades[MAX];
+int n;
+int highIndex, lowIndex;
+
+double calculate_average(void)
+{
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+        sum += grades[i];
+
+    return (double)sum / n;
+}
+
+void find_highest_lowest(void)
+{
+    highIndex = 0;
+    lowIndex = 0;
+
+    for (int i = 1; i < n; i++)
+    {
+        if (grades[i] > grades[highIndex])
+            highIndex = i;
+        if (grades[i] < grades[lowIndex])
+            lowIndex = i;
+    }
+}
+
+int main(void)
+{
+    printf("Enter number of students: ");
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++)
+    {
+        printf("Enter name of student %d: ", i + 1);
+        scanf("%s", names[i]);
+
+        printf("Enter grade of %s: ", names[i]);
+        scanf("%d", &grades[i]);
+    }
+
+    double average = calculate_average();
+    find_highest_lowest();
+
+    printf("--- Results ---\n");
+    printf("Average grade: %.2f\n", average);
+    printf("Highest grade: %d (%s)\n", grades[highIndex], names[highIndex]);
+    printf("Lowest grade: %d (%s)\n", grades[lowIndex], names[lowIndex]);
+
+    printf("Students who passed:\n");
+    for (int i = 0; i < n; i++)
+    {
+        if (grades[i] >= 60)
+        {
+            char letter;
+            if (grades[i] >= 80)
+                letter = 'A';
+            else if (grades[i] >= 70)
+                letter = 'B';
+            else
+                letter = 'C';
+
+            printf("%s - Grade %c\n", names[i], letter);
         }
     }
 
-    for (int i = 0; i < 5; i++) {
-        if (*(ptr1 + i) > *(ptr2 + i)) {
-            continue;
-        } 
-        else {
-            for (int i = 0; i < 5; i++) {
-                if (*(ptr1 + i) > *(ptr2 + i)) {
-                    temp = *(ptr1 + i);
-                    *(ptr1 + i) = *(ptr2 + i);
-                    *(ptr2 + i) = temp;
-        }
-    }
-        }
-    }
-    printf("Sorted: %d %d %d %d %d\n", array[0], array[1], array[2], array[3], array[4]);
-
+    return 0;
 }
